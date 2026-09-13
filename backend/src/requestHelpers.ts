@@ -12,6 +12,7 @@ const TIMEOUT_MS = 5 * 1000;
  * @param nameLast     
  * @param programName  
  * @param age        
+ * @param school
  *   
  * @returns The HTTP status code and leith response body
  */
@@ -21,7 +22,8 @@ export async function requestAdminAuthRegister(
         nameFirst: string, 
         nameLast: string, 
         programName: string, 
-        age: number
+        age: number,
+        school: string
     ) {
     const res = await fetch(SERVER_URL + '/v1/admin/auth/register', {
         method: 'POST',
@@ -35,6 +37,7 @@ export async function requestAdminAuthRegister(
             nameLast,
             programName,
             age,
+            school,
         }),
         signal: AbortSignal.timeout(TIMEOUT_MS),
     });
@@ -98,7 +101,7 @@ export async function requestAdminStudentUserDetails(controlUserSessionId: strin
  * 
  * @returns The HTTP status code and leith response body
  */
-export async function requestAdminStudentDetailsUpdate(controlUserSessionId: string, email: string, nameFirst: string, nameLast: string, age: number, programName: string) {
+export async function requestAdminStudentDetailsUpdate(controlUserSessionId: string, email: string, nameFirst: string, nameLast: string, age: number, programName: string, school: string) {
 
     const res = await fetch(SERVER_URL + '/v1/admin/studentuser/details', {
         method: 'PUT',
@@ -112,6 +115,7 @@ export async function requestAdminStudentDetailsUpdate(controlUserSessionId: str
             nameLast, 
             age, 
             programName,
+            school,
         }),
         signal: AbortSignal.timeout(TIMEOUT_MS),
     });

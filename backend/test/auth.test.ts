@@ -33,7 +33,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         expect(registerReturn).toEqual({
             controlUserSessionId: expect.any(String)
@@ -48,7 +49,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -62,7 +64,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         await expect(
@@ -72,7 +75,8 @@ describe('adminAuthRegister tests', () => {
             'Peter',
             'Smith',
             'Engineering',
-            21
+            21,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -87,7 +91,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -102,7 +107,8 @@ describe('adminAuthRegister tests', () => {
             'a'.repeat(1000),
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -117,7 +123,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'a'.repeat(1000),
             'Computer Science',
-            20
+            20,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -132,7 +139,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'a'.repeat(1000),
-            20
+            20,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -147,7 +155,8 @@ describe('adminAuthRegister tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            -1
+            -1,
+            'UNSW'
             )
         ).rejects.toMatchObject({
             status: 400,
@@ -165,7 +174,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('controlUserSessionId');
@@ -180,7 +190,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -194,7 +205,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         const response = await requestAdminAuthRegister(
@@ -203,7 +215,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Peter',
             'Smith',
             'Engineering',
-            21
+            21,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -217,7 +230,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -231,7 +245,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'a'.repeat(100),
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -245,7 +260,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'G'.repeat(100),
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -260,7 +276,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'C'.repeat(100),
-            20
+            20,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -275,7 +292,8 @@ describe('POST /v1/admin/auth/register - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            -1
+            -1,
+            'UNSW'
         );
 
         expect(response.statusCode).toBe(400);
@@ -294,7 +312,8 @@ describe('adminAuthLogin tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
     });
 
@@ -345,7 +364,8 @@ describe('POST /v1/admin/auth/login - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
     });
 
@@ -395,7 +415,8 @@ describe('adminStudentUserDetails tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         studentId = findStudentIdFromSession(register.controlUserSessionId);
@@ -412,6 +433,7 @@ describe('adminStudentUserDetails tests', () => {
             age: 20,
             email: 'z5678705@unsw.edu.au',
             programName: 'Computer Science',
+            school: 'UNSW',
             numSuccessfulLogins: 1,
             numFailedPasswordsSinceLastLogin: 0,
         },
@@ -435,7 +457,8 @@ describe('GET /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         controlUserSessionId = register.controlUserSessionId;
@@ -452,6 +475,7 @@ describe('GET /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             age: 20,
             email: 'z5678705@unsw.edu.au',
             programName: 'Computer Science',
+            school: 'UNSW',
             numSuccessfulLogins: 1,
             numFailedPasswordsSinceLastLogin: 0,
         },
@@ -478,7 +502,8 @@ describe('adminStudentUserDetailsUpdate tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         studentId = findStudentIdFromSession(register.controlUserSessionId);
@@ -487,7 +512,7 @@ describe('adminStudentUserDetailsUpdate tests', () => {
 
     test('Details Update Successful', () => {
 
-        const res1 = adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Chris', 'Li', 21, 'Electrical Eng');
+        const res1 = adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Chris', 'Li', 21, 'Electrical Eng', 'University of Sydney');
 
         const res2 = adminStudentUserDetails(studentId);
 
@@ -498,6 +523,7 @@ describe('adminStudentUserDetailsUpdate tests', () => {
                 age: 21,
                 email: 'z5567980@unsw.edu.au',
                 programName: 'Electrical Eng',
+                school: 'University of Sydney',
                 numSuccessfulLogins: expect.any(Number),
                 numFailedPasswordsSinceLastLogin: expect.any(Number),
             },
@@ -505,11 +531,11 @@ describe('adminStudentUserDetailsUpdate tests', () => {
     });
 
     test('Details Update Unsuccessful: Invalid studentId', () => {
-        expect(() => adminStudentUserDetailsUpdate(-1, '123', 'Chris', 'Li', 21, 'Electrical Eng')).toThrow('Invalid studentId');
+        expect(() => adminStudentUserDetailsUpdate(-1, '123', 'Chris', 'Li', 21, 'Electrical Eng', 'University of Sydney')).toThrow('Invalid studentId');
     });
 
     test('Details Update Unsuccessful: Invalid Email fromat', () => {
-        expect(() => adminStudentUserDetailsUpdate(studentId, '123', 'Chris', 'Li', 21, 'Electrical Eng')).toThrow('Invalid email');
+        expect(() => adminStudentUserDetailsUpdate(studentId, '123', 'Chris', 'Li', 21, 'Electrical Eng', 'University of Sydney')).toThrow('Invalid email');
     });
 
     test('Details Update Unsuccessful: Email in use', async () => {
@@ -520,26 +546,27 @@ describe('adminStudentUserDetailsUpdate tests', () => {
             'Jack',
             'Cheng',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         stu1Id = findStudentIdFromSession(register.controlUserSessionId);
-        expect(() => adminStudentUserDetailsUpdate(stu1Id, 'z5678705@unsw.edu.au', 'Mike', 'Cheng', 21, 'Computer Science')).toThrow('Email is currently used by another user');
+        expect(() => adminStudentUserDetailsUpdate(stu1Id, 'z5678705@unsw.edu.au', 'Mike', 'Cheng', 21, 'Computer Science', 'University of Sydney')).toThrow('Email is currently used by another user');
     });
 
     test('Details Update Unsuccessful: FirstName invalidity', () => {
-        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'a'.repeat(100), 'Guo', 21, 'Electrical Eng')).toThrow('NameFirst or NameLast is invalid');
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'a'.repeat(100), 'Guo', 21, 'Electrical Eng', 'University of Sydney')).toThrow('NameFirst or NameLast is invalid');
     });
 
     test('Details Update Unsuccessful: LastName invalidity', () => {
-        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'G'.repeat(100), 21, 'Electrical Eng')).toThrow('NameFirst or NameLast is invalid');
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'G'.repeat(100), 21, 'Electrical Eng', 'University of Sydney')).toThrow('NameFirst or NameLast is invalid');
     });
 
     test('Details Update Unsuccessful: ProgramName invalidity', () => {
-        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'Guo', 21, 'E'.repeat(100))).toThrow('Invalid programName');
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'Guo', 21, 'E'.repeat(100), 'University of Sydney')).toThrow('Invalid programName');
     });
 
     test('Details Update Unsuccessful: age invalidity', () => {
-        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'Guo', -1, 'Electrical Eng')).toThrow('Invalid age');
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5567980@unsw.edu.au', 'Jack', 'Guo', -1, 'Electrical Eng', 'University of Sydney')).toThrow('Invalid age');
     });
 });
 
@@ -554,7 +581,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         controlUserSessionId = register.controlUserSessionId;
@@ -567,7 +595,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual({});
@@ -579,6 +608,7 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
                 email: 'z55555@unsw.edu.au',
                 age: 21,
                 programName: 'Electrical Eng',
+                school: 'University of Sydney',
             },
         });
     });
@@ -590,7 +620,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -603,7 +634,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -616,7 +648,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -633,7 +666,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Yi',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         sessionId = register.controlUserSessionId
 
@@ -643,7 +677,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Eric',
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -657,7 +692,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'E'.repeat(100),
             'Wang',
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -671,7 +707,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Wang',
             'E'.repeat(100),
             21,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -684,7 +721,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Wang',
             'Eric',
             -1,
-            'Electrical Eng'
+            'Electrical Eng',
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -697,7 +735,8 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
             'Wang',
             'Eric',
             20,
-            'E'.repeat(100)
+            'E'.repeat(100),
+            'University of Sydney'
         );
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', expect.any(String));
@@ -716,7 +755,8 @@ describe('adminStudentUserPasswordUpdate tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         studentId = findStudentIdFromSession(register.controlUserSessionId);
     });
@@ -793,7 +833,8 @@ describe('PUT /v1/admin/studentuser/password - HTTP layer via requestHelper', ()
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
 
         controlUserSessionId = register.controlUserSessionId;
@@ -889,7 +930,8 @@ describe('adminAuthLogout tests', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         const loginreturn = await adminAuthLogin('z5678705@unsw.edu.au', 'abc123~!@');
         stulogin = loginreturn.controlUserSessionId;
@@ -916,7 +958,8 @@ describe('POST /v1/admin/auth/logout - HTTP layer via requestHelper', () => {
             'Alan',
             'Guo',
             'Computer Science',
-            20
+            20,
+            'UNSW'
         );
         const register = await adminAuthLogin('z5678705@unsw.edu.au', 'abc123~!@')
         controlUserSessionId = register.controlUserSessionId;
@@ -934,5 +977,186 @@ describe('POST /v1/admin/auth/logout - HTTP layer via requestHelper', () => {
         const response = await requestAdminAuthLogout('-1');
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty('error', expect.any(String));
+    });
+});
+
+describe('school tests', () => {
+
+    test('register unsuccessfully: school too long', async () => {
+        await expect(
+            adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a'.repeat(51))
+        ).rejects.toMatchObject({status: 400, message: 'Invalid school'});
+    });
+
+    test('returns 400 for registration: school too long', async () => {
+        const response = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a'.repeat(51));
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+    });
+
+    test('Details Update Unsuccessful: school too long', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a'.repeat(51))).toThrow('Invalid school');
+        expect(adminStudentUserDetails(studentId).user.school).toBe('UNSW');
+    });
+
+    test('returns 400 for details update: school too long', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(register.controlUserSessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a'.repeat(51));
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+        const details = await requestAdminStudentUserDetails(register.controlUserSessionId);
+        expect(details.body.user.school).toBe('UNSW');
+    });
+
+    test('register unsuccessfully: school too short', async () => {
+        await expect(
+            adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a')
+        ).rejects.toMatchObject({status: 400, message: 'Invalid school'});
+    });
+
+    test('returns 400 for registration: school too short', async () => {
+        const response = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+    });
+
+    test('Details Update Unsuccessful: school too short', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a')).toThrow('Invalid school');
+        expect(adminStudentUserDetails(studentId).user.school).toBe('UNSW');
+    });
+
+    test('returns 400 for details update: school too short', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(register.controlUserSessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+        const details = await requestAdminStudentUserDetails(register.controlUserSessionId);
+        expect(details.body.user.school).toBe('UNSW');
+    });
+
+    test('register unsuccessfully: school empty', async () => {
+        await expect(
+            adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, '')
+        ).rejects.toMatchObject({status: 400, message: 'Invalid school'});
+    });
+
+    test('returns 400 for registration: school empty', async () => {
+        const response = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, '');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+    });
+
+    test('Details Update Unsuccessful: school empty', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', '')).toThrow('Invalid school');
+        expect(adminStudentUserDetails(studentId).user.school).toBe('UNSW');
+    });
+
+    test('returns 400 for details update: school empty', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(register.controlUserSessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', '');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+        const details = await requestAdminStudentUserDetails(register.controlUserSessionId);
+        expect(details.body.user.school).toBe('UNSW');
+    });
+
+    test('register unsuccessfully: school invalid characters', async () => {
+        await expect(
+            adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'School123')
+        ).rejects.toMatchObject({status: 400, message: 'Invalid school'});
+    });
+
+    test('returns 400 for registration: school invalid characters', async () => {
+        const response = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'School123');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+    });
+
+    test('Details Update Unsuccessful: school invalid characters', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(() => adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'School123')).toThrow('Invalid school');
+        expect(adminStudentUserDetails(studentId).user.school).toBe('UNSW');
+    });
+
+    test('returns 400 for details update: school invalid characters', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(register.controlUserSessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'School123');
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'Invalid school');
+        const details = await requestAdminStudentUserDetails(register.controlUserSessionId);
+        expect(details.body.user.school).toBe('UNSW');
+    });
+
+    test('register and update successfully: school 50 characters', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a'.repeat(50));
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(adminStudentUserDetails(studentId).user.school).toBe('a'.repeat(50));
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a'.repeat(50));
+        expect(adminStudentUserDetails(studentId).user.school).toBe('a'.repeat(50));
+    });
+
+    test('returns 200 for registration and update: school 50 characters', async () => {
+        const register = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'a'.repeat(50));
+        expect(register.statusCode).toBe(200);
+        const sessionId = register.body.controlUserSessionId;
+        const details = await requestAdminStudentUserDetails(sessionId);
+        expect(details.body.user.school).toBe('a'.repeat(50));
+        await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'a'.repeat(50));
+        expect(response.statusCode).toBe(200);
+        const updatedDetails = await requestAdminStudentUserDetails(sessionId);
+        expect(updatedDetails.body.user.school).toBe('a'.repeat(50));
+    });
+
+    test('register and update successfully: school two characters', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'AB');
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(adminStudentUserDetails(studentId).user.school).toBe('AB');
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'AB');
+        expect(adminStudentUserDetails(studentId).user.school).toBe('AB');
+    });
+
+    test('returns 200 for registration and update: school two characters', async () => {
+        const register = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, 'AB');
+        expect(register.statusCode).toBe(200);
+        const sessionId = register.body.controlUserSessionId;
+        const details = await requestAdminStudentUserDetails(sessionId);
+        expect(details.body.user.school).toBe('AB');
+        await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'AB');
+        expect(response.statusCode).toBe(200);
+        const updatedDetails = await requestAdminStudentUserDetails(sessionId);
+        expect(updatedDetails.body.user.school).toBe('AB');
+    });
+
+    test('register and update successfully: school allowed punctuation', async () => {
+        const register = await adminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, "St Mary's-School");
+        const studentId = findStudentIdFromSession(register.controlUserSessionId);
+        expect(adminStudentUserDetails(studentId).user.school).toBe("St Mary's-School");
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        adminStudentUserDetailsUpdate(studentId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', "St Mary's-School");
+        expect(adminStudentUserDetails(studentId).user.school).toBe("St Mary's-School");
+    });
+
+    test('returns 200 for registration and update: school allowed punctuation', async () => {
+        const register = await requestAdminAuthRegister('z5678705@unsw.edu.au', 'abc123~!@', 'Alan', 'Guo', 'Computer Science', 20, "St Mary's-School");
+        expect(register.statusCode).toBe(200);
+        const sessionId = register.body.controlUserSessionId;
+        const details = await requestAdminStudentUserDetails(sessionId);
+        expect(details.body.user.school).toBe("St Mary's-School");
+        await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', 'UNSW');
+        const response = await requestAdminStudentDetailsUpdate(sessionId, 'z5678705@unsw.edu.au', 'Alan', 'Guo', 20, 'Computer Science', "St Mary's-School");
+        expect(response.statusCode).toBe(200);
+        const updatedDetails = await requestAdminStudentUserDetails(sessionId);
+        expect(updatedDetails.body.user.school).toBe("St Mary's-School");
     });
 });

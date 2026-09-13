@@ -15,6 +15,7 @@ Completed:
 - Student login and password verification
 - Retrieval of authenticated student details
 - Updating authenticated student details with input validation
+- School information in student registration and profile details
 - Secure student password updates with password history checks
 - Student logout with session invalidation
 - UUID-based authenticated sessions
@@ -146,9 +147,12 @@ Example request body:
   "nameFirst": "Alan",
   "nameLast": "Guo",
   "programName": "Computer Science",
-  "age": 20
+  "age": 20,
+  "school": "UNSW"
 }
 ```
+
+`school` is required and must contain 2–50 characters, using only English letters, spaces, apostrophes and hyphens.
 
 Successful response:
 
@@ -196,6 +200,7 @@ Successful response:
   "user": {
     "studentId": 1,
     "name": "Alan Guo",
+    "school": "UNSW",
     "age": 20,
     "email": "z5678705@unsw.edu.au",
     "programName": "Computer Science",
@@ -221,9 +226,12 @@ Example request body:
   "nameFirst": "Eric",
   "nameLast": "Wang",
   "age": 21,
-  "programName": "Electrical Eng"
+  "programName": "Electrical Eng",
+  "school": "University of Sydney"
 }
 ```
+
+`school` is required and follows the same validation rules as registration.
 
 Successful response:
 

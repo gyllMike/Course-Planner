@@ -4,6 +4,7 @@ import {
         studentIdGen,
         controlUserSessionIdGen,
         nameValidity,
+        schoolValidity,
         eamilValidity,
         passwordValidity,
         programNameValidity,
@@ -19,6 +20,7 @@ import bcrypt from 'bcrypt';
   * @param password - The password that the controlUser sets to register and later logins
   * @param nameFirst - The first name of the controlUser
   * @param nameLast - The last name of the controlUser
+  * @param school - The school of the controlUser
   *
   * @returns An object containing the generated controlUserSessionId if the controlUser is successfully registered.
   * @throws {HTTPError} 400 - Error case: if the email, name or password is invalid.
@@ -29,7 +31,8 @@ export async function adminAuthRegister(
         nameFirst: string, 
         nameLast: string, 
         programName: string, 
-        age: number): Promise<{ controlUserSessionId: string }> {
+        age: number,
+        school: string): Promise<{ controlUserSessionId: string }> {
     
     // email Validity
     if (eamilValidity(email) !== null) {
@@ -56,6 +59,11 @@ export async function adminAuthRegister(
         throw createHttpError(400, 'PassWoed Invalid');
     }
 
+    // school Validity
+    if (schoolValidity(school) !== true) {
+        throw createHttpError(400, 'Invalid school');
+    }
+
     // get some data
     const data: DataStore = getData();
     const studentId: number = studentIdGen();
@@ -66,6 +74,7 @@ export async function adminAuthRegister(
     data.StudentAuthArray.push({
         studentAuth: {
             studentId: studentId,
+            school: school,
             nameFirst: nameFirst,
             nameLast: nameLast,
             email: email,
@@ -158,6 +167,7 @@ export function adminStudentUserDetails(studentId: number): {user:
     {
         studentId: number;
         name: string;
+        school: string;
         age: number;
         email: string;
         programName: string;
@@ -186,6 +196,7 @@ export function adminStudentUserDetails(studentId: number): {user:
             studentId: userAuth.studentId,
             name:`${userAuth.nameFirst} ${userAuth.nameLast}`,
             age: age,
+            school: userAuth.school,
             email: userAuth.email,
             programName: program,
             numSuccessfulLogins: userAuth.numSuccessfulLogins,
@@ -203,13 +214,14 @@ export function adminStudentUserDetails(studentId: number): {user:
  * @param nameLast - The new last name of the student
  * @param programName - The program that the student is taking
  * @param age - The age of the user
+ * @param school - The school of the user
  *
  * @returns An empty object if the controlUser details are successfully updated.
  *
  * @throws {HTTPError} 400 - If the email, name, age, or programName is invalid.
  * @throws {HTTPError} 401 - If the studentId/controlUserId is invalid.
  */
-export function adminStudentUserDetailsUpdate(studentId: number, email: string, nameFirst: string, nameLast: string, age: number, programName: string ): Record<string, never> {
+export function adminStudentUserDetailsUpdate(studentId: number, email: string, nameFirst: string, nameLast: string, age: number, programName: string, school: string ): Record<string, never> {
 
     const data = getData();
 
@@ -240,6 +252,11 @@ export function adminStudentUserDetailsUpdate(studentId: number, email: string, 
         throw createHttpError(400, 'Invalid age');
     }
 
+    if (!schoolValidity(school)) {
+        throw createHttpError(400, 'Invalid school');
+    }
+
+    stuDetail.studentAuth.school = school;
     student.student.programName = programName;
     student.student.age = age;
     stuDetail.studentAuth.email = email;

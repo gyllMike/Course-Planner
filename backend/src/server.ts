@@ -49,6 +49,7 @@ app.get("/courses", (req, res) => {
  * @param {string} nameFirst    200.user.nameFirst - user put the nameFirst
  * @param {string} nameLast     200.user.nameLast - user put the nameLast
  * @param {string} programName  200.user.programName - user put the programName
+ * @param {string} school       200.user.school - user put the school
  * @param {number} age          200.user.age - user put the age
  * 
  * @returns {Object} 200 - The generated controlUserSessionId
@@ -61,6 +62,7 @@ app.post('/v1/admin/auth/register', async (req, res) => {
     nameLast,
     programName,
     age,
+    school,
   } = req.body;
 
   const result = await adminAuthRegister(
@@ -69,7 +71,8 @@ app.post('/v1/admin/auth/register', async (req, res) => {
     nameFirst,
     nameLast,
     programName,
-    age
+    age,
+    school
   );
 
   res.status(200).json(result);
@@ -111,6 +114,7 @@ app.post('/v1/admin/auth/login', async (req, res) => {
  * @returns {string} 200.user.name - Full name (first and last name concatenated with a space)
  * @returns {number} 200.user.age - The age of the user.
  * @returns {string} 200.user.email - The user's registered email address
+ * @returns {string} 200.user.school - The user's school
  * @returns {string} 200.user.programName - The program name that the student user studyed in
  * @returns {number} 200.user.numSuccessfulLogins - Total successful logins since registration
  * @returns {number} 200.user.numFailedPasswordsSinceLastLogin - Number of failed login attempts
@@ -145,6 +149,7 @@ app.get('/v1/admin/studentuser/details', (req, res) => {
  * @param {string} nameLast     200.user.nameLast - user put the nameLast
  * @param {number} age          200.user.age - user put the age
  * @param {string} programName  200.user.programName - user put the programName
+ * @param {string} school       200.user.school - user put the school
  * 
  * @returns {}
  */
@@ -162,11 +167,12 @@ app.put('/v1/admin/studentuser/details', (req, res) => {
     nameLast,
     age, 
     programName,
+    school,
   } = req.body;
 
   const studentId = findStudentIdFromSession(controlUserSessionId);
 
-  const result = adminStudentUserDetailsUpdate(studentId, email, nameFirst, nameLast, age, programName);
+  const result = adminStudentUserDetailsUpdate(studentId, email, nameFirst, nameLast, age, programName, school);
 
   res.status(200).json(result);
 

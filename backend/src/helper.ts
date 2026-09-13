@@ -48,6 +48,16 @@ export function nameValidity(nameFirst: string, nameLast: string): boolean {
     return true;
 }
 
+// set the help function of school validity
+export function schoolValidity(school: string): boolean {
+    if (school.length > 50 || school.length < 2) {
+        return false;
+    } else if (!/^[A-Za-z' -]+$/.test(school)) {
+        return false;
+    }
+    return true;
+}
+
 // set the help function of email validity
 /**
  * <Check whether the eamil input is correct>

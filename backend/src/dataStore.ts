@@ -10,6 +10,7 @@ export interface Student {
 export interface StudentAuth {
     studentId: number;
 
+    school: string;
     nameFirst: string;
     nameLast: string;
     email: string;
