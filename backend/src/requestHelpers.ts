@@ -148,3 +148,24 @@ export async function requestAdminStudentUserPasswordUpdate(controlUserSessionId
         body: await res.json(),
     };
 }
+
+/**
+ * Send POST '/v1/admin/auth/logout'
+ * 
+ * @param controlUserSessionId
+ * 
+ * @returns The HTTP status code and leith response body
+ */
+export async function requestAdminAuthLogout(controlUserSessionId: string) {
+
+    const res = await fetch(SERVER_URL + '/v1/admin/auth/logout', {
+        method: 'POST',
+        headers: { controlUserSessionId },
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+
+    return {
+        statusCode: res.status,
+        body: await res.json(),
+    };
+}

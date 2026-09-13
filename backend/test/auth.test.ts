@@ -1,4 +1,4 @@
-import { adminAuthLogin, adminAuthRegister, adminStudentUserDetails, adminStudentUserDetailsUpdate, adminStudentUserPasswordUpdate } from "../src/auth.js";
+import { adminAuthLogin, adminAuthLogout, adminAuthRegister, adminStudentUserDetails, adminStudentUserDetailsUpdate, adminStudentUserPasswordUpdate } from "../src/auth.js";
 import { setData } from '../src/dataStore.js';
 import {
   beforeEach,
@@ -6,9 +6,14 @@ import {
   expect,
   test,
 } from 'vitest';
-import { requestAdminAuthLogin, requestAdminAuthRegister, requestAdminStudentUserDetails, requestAdminStudentDetailsUpdate, requestAdminStudentUserPasswordUpdate } from "../src/requestHelpers.js";
-import { controlUserSessionIdGen, findStudentIdFromSession } from "../src/helper.js";
-
+import { requestAdminAuthLogin, 
+    requestAdminAuthRegister, 
+    requestAdminStudentUserDetails, 
+    requestAdminStudentDetailsUpdate, 
+    requestAdminStudentUserPasswordUpdate, 
+    requestAdminAuthLogout 
+} from "../src/requestHelpers.js";
+import {findStudentIdFromSession} from "../src/helper.js";
 
 beforeEach(() => {
   setData({
@@ -17,7 +22,6 @@ beforeEach(() => {
     controlUserSessionsArray: [],
   });
 });
-
 
 // Test function adminAuthRegister
 describe('adminAuthRegister tests', () => {
@@ -701,7 +705,7 @@ describe('PUT /v1/admin/studentuser/details - HTTP layer via requestHelper', () 
 });
 
 // test function adminStudentUserPasswordUpdate
-describe('adminStudentUserPasswordUpdate', () => {
+describe('adminStudentUserPasswordUpdate tests', () => {
 
     let studentId: number;
     
@@ -871,4 +875,64 @@ describe('PUT /v1/admin/studentuser/password - HTTP layer via requestHelper', ()
         expect(response.body).toHaveProperty('error', expect.any(String));
     });
 
+});
+
+// test function adminAuthLogout
+describe('adminAuthLogout tests', () => {
+    let stulogin: string;
+    
+    beforeEach(async () => {
+
+        await adminAuthRegister(
+            'z5678705@unsw.edu.au',
+            'abc123~!@',
+            'Alan',
+            'Guo',
+            'Computer Science',
+            20
+        );
+        const loginreturn = await adminAuthLogin('z5678705@unsw.edu.au', 'abc123~!@');
+        stulogin = loginreturn.controlUserSessionId;
+    });
+
+    test('Logout Successful', () => {
+        const stulogout = adminAuthLogout(stulogin)
+        expect(stulogout).toEqual({});
+        expect(() => findStudentIdFromSession(stulogin)).toThrow();
+    });
+
+    test('Logout unsuccessful: invalid sessionid', () => {
+        expect(() => adminAuthLogout('-1')).toThrow('Invalid session');
+    });
+});
+
+describe('POST /v1/admin/auth/logout - HTTP layer via requestHelper', () => {
+    let controlUserSessionId: string;
+
+    beforeEach(async () => {
+        await adminAuthRegister(
+            'z5678705@unsw.edu.au',
+            'abc123~!@',
+            'Alan',
+            'Guo',
+            'Computer Science',
+            20
+        );
+        const register = await adminAuthLogin('z5678705@unsw.edu.au', 'abc123~!@')
+        controlUserSessionId = register.controlUserSessionId;
+    });
+
+    test('returns 200 for logout successful', async () => {
+        const response = await requestAdminAuthLogout(controlUserSessionId);
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({});
+        const detailsResponse = await requestAdminStudentUserDetails(controlUserSessionId);
+        expect(detailsResponse.statusCode).toBe(401);
+    });
+
+    test('returns 401 for invalid sessionid', async () => {
+        const response = await requestAdminAuthLogout('-1');
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toHaveProperty('error', expect.any(String));
+    });
 });

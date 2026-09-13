@@ -309,3 +309,23 @@ export async function adminStudentUserPasswordUpdate(studentId: number, oldPassw
 
     return {};
 }
+
+/**
+ * Logs out an authenticated student user session.
+ *
+ * @param controlUserSessionId - The session ID of the controlUser(student) to log out
+ *
+ * @returns An empty object if the controlUser(student) is successfully logged out.
+ *
+ * @throws {HTTPError} 401 - If the controlUserSessionId is invalid.
+ */
+export function adminAuthLogout(controlUserSessionId: string): Record<string, never> {
+    const data = getData();
+    const findIdx = data.controlUserSessionsArray.findIndex(i => i.controlUserSession.controlUserSessionId === controlUserSessionId);
+    if (findIdx === -1) {
+        throw createHttpError(401, 'Invalid session');
+    }
+    data.controlUserSessionsArray.splice(findIdx, 1);
+    setData(data);
+    return {};
+}

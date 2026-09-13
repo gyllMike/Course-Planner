@@ -1,5 +1,5 @@
 import express from "express";
-import { adminAuthLogin, adminAuthRegister, adminStudentUserDetails, adminStudentUserDetailsUpdate, adminStudentUserPasswordUpdate } from "./auth.js";
+import { adminAuthLogin, adminAuthLogout, adminAuthRegister, adminStudentUserDetails, adminStudentUserDetailsUpdate, adminStudentUserPasswordUpdate } from "./auth.js";
 import createHttpError from "http-errors";
 import { findStudentIdFromSession } from "./helper.js";
 
@@ -198,6 +198,24 @@ app.put('/v1/admin/studentuser/password', async (req, res) => {
   const studentId = findStudentIdFromSession(controlUserSessionId);
   const result = await adminStudentUserPasswordUpdate(studentId, oldPassword, newPassword);
 
+  res.status(200).json(result);
+});
+
+/**
+ * POST /v1/admin/auth/logout
+ * 
+ * Logs out an authenticated student user by invalidating the provided session ID.
+ * 
+ * @param {string} controlUserSessionId - A unique session ID (generated via UUID) that maps to a valid studentId.
+ * 
+ * @returns {}
+ */
+app.post('/v1/admin/auth/logout', (req, res) => {
+  const controlUserSessionId = req.header('controlUserSessionId');
+  if (!controlUserSessionId) {
+    throw createHttpError(401, 'Missing controlUserSessionid');
+  }
+  const result = adminAuthLogout(controlUserSessionId);
   res.status(200).json(result);
 });
 
