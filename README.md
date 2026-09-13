@@ -16,14 +16,15 @@ Completed:
 - Retrieval of authenticated student details
 - Updating authenticated student details with input validation
 - Secure student password updates with password history checks
+- Student logout with session invalidation
 - UUID-based authenticated sessions
 - JSON file persistence for local development
-- REST endpoints for registration, login, student details, details updates and password updates
+- Complete authentication and session-management REST API
 - Unit and HTTP integration tests for authentication
 
 In progress:
 
-- Remaining authentication and session-management features
+- Planning the course catalogue and study-plan features
 
 Planned next:
 
@@ -253,7 +254,20 @@ Successful response:
 {}
 ```
 
-Invalid registration, login, student details update or password update requests return an error response with an appropriate HTTP status code:
+### Log out
+
+```http
+POST /v1/admin/auth/logout
+controlUserSessionId: generated-session-uuid
+```
+
+Successful response:
+
+```json
+{}
+```
+
+Invalid authentication or student account requests return an error response with an appropriate HTTP status code:
 
 ```json
 {
