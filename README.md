@@ -1,8 +1,8 @@
-# UNSW Planner
+# Course Planner
 
-UNSW Planner is a full-stack web application designed to help UNSW students organise their courses across different terms and academic years.
+Course Planner is a full-stack web application designed to help all students organise their courses across different terms and academic years.
 
-Students will be able to search for courses, build a personalised study plan for Term 1, Term 2 and Term 3, and move or remove courses as their degree plan changes. The project also aims to build a reusable course catalogue so that course information does not need to be entered repeatedly.
+Students will be able to search for courses, build a personalised study plan across terms and academic years, and move or remove courses as their degree plan changes. The project also aims to build a reusable course catalogue so that course information does not need to be entered repeatedly.
 
 ## Project Status
 
@@ -37,7 +37,7 @@ Planned next:
 
 ## MVP Scope
 
-The first usable version of UNSW Planner will allow a student to:
+The first usable version of Course Planner will allow a student to:
 
 1. Register and log in.
 2. Search or browse available courses.
@@ -72,7 +72,7 @@ Frontend development has not started yet. The intended frontend will provide a v
 ## Project Structure
 
 ```text
-UNSW-Planner/
+Course-Planner/
 ├── backend/
 │   ├── src/
 │   │   ├── auth.ts             # Authentication business logic
