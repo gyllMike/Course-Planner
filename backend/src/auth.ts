@@ -34,43 +34,35 @@ export async function adminAuthRegister(
         age: number,
         school: string): Promise<{ controlUserSessionId: string }> {
     
-    // email Validity
     if (eamilValidity(email) !== null) {
         throw createHttpError(400, 'Invalid email');
     }
 
-    // name Validity
     if (nameValidity(nameFirst, nameLast) !== true) {
         throw createHttpError(400, 'Name Invalid');
     }
 
-    // Password Validity
     if (passwordValidity(password) !== true) {
         throw createHttpError(400, 'PassWoed Invalid');
     }
 
-    // programName Validity
     if (programNameValidity(programName) !== true) {
         throw createHttpError(400, 'PassWoed Invalid');
     }
 
-    // age Validity
     if (ageValidity(age) !== true) {
         throw createHttpError(400, 'PassWoed Invalid');
     }
 
-    // school Validity
     if (schoolValidity(school) !== true) {
         throw createHttpError(400, 'Invalid school');
     }
 
-    // get some data
     const data: DataStore = getData();
     const studentId: number = studentIdGen();
     const studentSessionId: string = controlUserSessionIdGen();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // push the information of the control user into controlUserArray of data
     data.StudentAuthArray.push({
         studentAuth: {
             studentId: studentId,
@@ -99,7 +91,6 @@ export async function adminAuthRegister(
             programName: programName
         }
     });
-
 
     setData(data);
 
@@ -221,7 +212,14 @@ export function adminStudentUserDetails(studentId: number): {user:
  * @throws {HTTPError} 400 - If the email, name, age, or programName is invalid.
  * @throws {HTTPError} 401 - If the studentId/controlUserId is invalid.
  */
-export function adminStudentUserDetailsUpdate(studentId: number, email: string, nameFirst: string, nameLast: string, age: number, programName: string, school: string ): Record<string, never> {
+export function adminStudentUserDetailsUpdate(studentId: number, 
+    email: string, 
+    nameFirst: string, 
+    nameLast: string, 
+    age: number, 
+    programName: string, 
+    school: string 
+): Record<string, never> {
 
     const data = getData();
 

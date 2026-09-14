@@ -101,7 +101,14 @@ export async function requestAdminStudentUserDetails(controlUserSessionId: strin
  * 
  * @returns The HTTP status code and leith response body
  */
-export async function requestAdminStudentDetailsUpdate(controlUserSessionId: string, email: string, nameFirst: string, nameLast: string, age: number, programName: string, school: string) {
+export async function requestAdminStudentDetailsUpdate(controlUserSessionId: string, 
+    email: string, 
+    nameFirst: string, 
+    nameLast: string, 
+    age: number, 
+    programName: string, 
+    school: string
+) {
 
     const res = await fetch(SERVER_URL + '/v1/admin/studentuser/details', {
         method: 'PUT',

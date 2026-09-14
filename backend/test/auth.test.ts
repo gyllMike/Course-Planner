@@ -918,7 +918,7 @@ describe('PUT /v1/admin/studentuser/password - HTTP layer via requestHelper', ()
 
 });
 
-// test function adminAuthLogout
+// All test function adminAuthLogout, since it added after
 describe('adminAuthLogout tests', () => {
     let stulogin: string;
     
